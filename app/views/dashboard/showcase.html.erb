@@ -1,0 +1,25 @@
+<div class="text-center mt-5">
+  <h1 class="display-4">Welcome to the Book Club Showcase!</h1>
+  <p class="lead">Explore our highlighted books and dive into the world of literature.</p>
+</div>
+
+<div class="row mt-4">
+  <% @highlighted_books.each do |book| %>
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5><%= book.title %></h5>
+        </div>
+        <div class="card-body">
+          <p><%= truncate(book.description, length: 100) %></p>
+          <p><strong>Price:</strong> <%= number_to_currency(book.price) %></p>
+          <%= link_to 'View Details', book_path(book), class: 'btn btn-primary btn-sm' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="text-center mt-4">
+  <%= link_to 'Search for Books', books_path, class: 'btn btn-success btn-lg' %>
+</div>

@@ -1,0 +1,157 @@
+{
+  "Minitest": {
+    "coverage": {
+      "C:/Users/seree/Desktop/CloudAppCA/bookClub/app/controllers/application_controller.rb": {
+        "lines": [
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "C:/Users/seree/Desktop/CloudAppCA/bookClub/app/controllers/books_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "C:/Users/seree/Desktop/CloudAppCA/bookClub/app/controllers/dashboard_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "C:/Users/seree/Desktop/CloudAppCA/bookClub/app/helpers/application_helper.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "C:/Users/seree/Desktop/CloudAppCA/bookClub/app/helpers/books_helper.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "C:/Users/seree/Desktop/CloudAppCA/bookClub/app/helpers/dashboard_helper.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "C:/Users/seree/Desktop/CloudAppCA/bookClub/app/jobs/application_job.rb": {
+        "lines": [
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {}
+      },
+      "C:/Users/seree/Desktop/CloudAppCA/bookClub/app/mailers/application_mailer.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "C:/Users/seree/Desktop/CloudAppCA/bookClub/app/models/application_record.rb": {
+        "lines": [
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "C:/Users/seree/Desktop/CloudAppCA/bookClub/app/models/book.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "C:/Users/seree/Desktop/CloudAppCA/bookClub/app/models/user.rb": {
+        "lines": [
+          0,
+          null,
+          null,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      }
+    },
+    "timestamp": 1734798855
+  }
+}

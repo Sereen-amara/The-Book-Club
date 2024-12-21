@@ -1,0 +1,22 @@
+
+
+body {
+    background-color: #f9f9f9;
+}
+
+.card {
+    border: 1px solid #ddd;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.text-primary {
+    font-weight: bold;
+}
