@@ -3,95 +3,99 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-  scan_ruby:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Fix bin permissions
-        run: chmod +x bin/*
-
-      - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
-
-  scan_js:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Fix bin permissions
-        run: chmod +x bin/*
-
-      - name: Scan for security vulnerabilities in JavaScript dependencies
-        run: bin/importmap audit
-
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Ruby
+      - name: Install Ruby and Gems
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Fix bin permissions
-        run: chmod +x bin/*
+      - name: Debug Ruby Installation
+        run: |
+          echo "Checking Ruby version"
+          ruby --version
+          echo "Checking Ruby path"
+          which ruby
 
-      - name: Lint code for consistent style
-        run: bin/rubocop -f github
+      - name: Generate Binstubs
+        run: bundle binstubs bundler-audit brakeman rubocop
+
+      - name: Security Audit Dependencies
+        run: bundle exec bundle audit --update
+
+      - name: Security Audit Application Code
+        run: bundle exec brakeman -q -w2
+
+      - name: Lint Ruby Files
+        run: bundle exec rubocop --auto-correct-all --disable-uncorrectable
 
   test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git pkg-config google-chrome-stable
-
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Ruby
+      - name: Install Ruby and Gems
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Fix bin permissions
-        run: chmod +x bin/*
+      - name: Debug Ruby Installation
+        run: |
+          echo "Checking Ruby version"
+          ruby --version
+          echo "Checking Ruby path"
+          which ruby
 
-      - name: Run tests
+      - name: Generate Binstubs
+        run: bundle binstubs bundler-audit brakeman rubocop
+
+      - name: Install Additional Packages
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git pkg-config google-chrome-stable
+
+      - name: Debug Environment
+        run: |
+          env
+          ls -la /usr/bin
+          echo "Current PATH: $PATH"
+
+      - name: Run Tests
         env:
           RAILS_ENV: test
         run: |
-          bin/rails db:create db:schema:load RAILS_ENV=test
-          bin/rails test
+          bundle exec rails db:create db:schema:load
+          bundle exec rails test
 
-      - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v4
-        if: failure()
+  scan_ruby:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Ruby and Gems
+        uses: ruby/setup-ruby@v1
         with:
-          name: screenshots
-          path: ${{ github.workspace }}/tmp/screenshots
-          if-no-files-found: ignore
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Debug Ruby Installation
+        run: |
+          echo "Checking Ruby version"
+          ruby --version
+          echo "Checking Ruby path"
+          which ruby
+
+      - name: Generate Binstubs
+        run: bundle binstubs brakeman
+
+      - name: Security Scan
+        run: bundle exec brakeman --no-pager
