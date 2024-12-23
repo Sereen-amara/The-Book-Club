@@ -121,7 +121,7 @@ jobs:
     steps:
       - name: Save SSH Key
         run: |
-          echo "$EC2_SSH_KEY" > mykey.pem
+          echo "SSH_KEY" > mykey.pem
           chmod 600 mykey.pem
 
       - name: Deploy via SSH
