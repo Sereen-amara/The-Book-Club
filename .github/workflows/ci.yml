@@ -147,7 +147,7 @@ jobs:
             set -euo pipefail
             cd /var/www/bookClub
 
-            # Ensure the directory is a valid Git repository.
+            #  the directory is a valid Git repository.
             if [ ! -d .git ]; then
               echo "Initializing Git repository..."
               git init
@@ -156,20 +156,20 @@ jobs:
               git checkout main
             fi
 
-            # Use rebase to resolve divergent branches automatically
+            #  rebase to resolve divergent branches automatically
             git pull --rebase origin main || {
               echo "Rebase failed; resolving conflicts by resetting..."
               git rebase --abort
               git reset --hard origin/main
             }
 
-            # Set environment variables with defaults
+            #  environment variables with defaults
             export DB_HOST=${DB_HOST:-localhost}
             export DB_USER=${DB_USER:-my_db_user}
             export DB_PASSWORD=${DB_PASSWORD:-default_password}
             export DB_NAME=${DB_NAME:-myapp_production}
 
-            # Install dependencies and setup Rails
+            #  dependencies and setup Rails
             bundle config set path 'vendor/bundle'
             bundle config set clean true
             bundle config set deployment true
