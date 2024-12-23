@@ -151,13 +151,13 @@ jobs:
             if [ ! -d .git ]; then
               echo "Initializing Git repository..."
               git init
-              git remote add origin git@github.com:username/repo.git
+              git remote add origin git@github.com:Sereen-amara/The-Book-Club.git
               git fetch origin
               git checkout main
             fi
 
-            # Update the repository
-            git pull origin main
+            # Use rebase to resolve divergent branches automatically
+            git pull --rebase origin main
 
             # Set environment variables and perform setup
             export DB_HOST=${DB_HOST}
@@ -178,5 +178,5 @@ jobs:
             sudo systemctl reload nginx
             sudo systemctl restart puma
           EOF
-  
+      
   
