@@ -132,7 +132,7 @@ jobs:
           DB_NAME: myapp_production
           EC2_SSH_KEY: ${{ secrets.SSH_KEY }}
         run: |
-          ssh -i ssh_key.pem -o StrictHostKeyChecking=no ubuntu@18.206.107.28 << 'EOF'
+          ssh -i ssh_key.pem -o StrictHostKeyChecking=no ubuntu@18.205.155.52 << 'EOF'
             set -e
             cd /var/www/bookClub
             git pull origin main
