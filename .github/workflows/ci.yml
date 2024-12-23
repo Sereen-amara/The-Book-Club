@@ -119,10 +119,17 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ lint, test, scan_ruby, scan_js ] # Ensure deploy runs after other jobs
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Save SSH Key
         run: |
-          echo "SSH_KEY" > mykey.pem
+          echo "${{ secrets.SSH_KEY }}" > mykey.pem
           chmod 600 mykey.pem
+
+      - name: Add Host to Known Hosts
+        run: |
+          ssh-keyscan -H 34.202.189.177 >> ~/.ssh/known_hosts
 
       - name: Deploy via SSH
         env:
@@ -130,7 +137,6 @@ jobs:
           DB_USER: my_db_user
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_NAME: myapp_production
-          EC2_SSH_KEY: ${{ secrets.SSH_KEY }}
         run: |
           ssh -i mykey.pem -o StrictHostKeyChecking=no ubuntu@34.202.189.177 << 'EOF'
             set -e
