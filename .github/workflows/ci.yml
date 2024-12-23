@@ -117,7 +117,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [ lint, test, scan_ruby, scan_js ] # Ensure deploy runs after other jobs
+    needs: [ lint, test, scan_ruby, scan_js ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -126,6 +126,11 @@ jobs:
         run: |
           echo "${{ secrets.SSH_KEY }}" > mykey.pem
           chmod 600 mykey.pem
+
+      - name: Ensure .ssh directory exists
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
 
       - name: Add Host to Known Hosts
         run: |
@@ -156,3 +161,4 @@ jobs:
             sudo systemctl restart nginx
             sudo systemctl restart puma
           EOF
+  
