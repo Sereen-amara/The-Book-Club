@@ -115,19 +115,29 @@ jobs:
       - name: Scan for security vulnerabilities in JavaScript dependencies
         run: bundle exec ruby bin/importmap audit
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [lint, test, scan_ruby, scan_js] # Ensure deploy runs after other jobs
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Save SSH Key
+        run: |
+          echo "$EC2_SSH_KEY" > ssh_key.pem
+          chmod 600 ssh_key.pem
+
       - name: Deploy to EC2
         env:
           EC2_HOST: 18.207.208.191
           EC2_USER: ubuntu
-          EC2_PATH_BACKEND: /var/www/myapp
+          EC2_PATH_BACKEND: /var/www/bookClub
           DB_HOST: localhost
           DB_USER: my_db_user
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_NAME: myapp_production
           EC2_SSH_KEY: ${{ secrets.SSH_KEY }}
         run: |
-          echo "$EC2_SSH_KEY" > ssh_key.pem
-          chmod 600 ssh_key.pem
           rsync -avz --no-perms --no-owner --chmod=755 --no-group --exclude 'vendor' --exclude 'node_modules' --exclude 'log' --exclude '.git' --exclude 'tmp' -e "ssh -i ssh_key.pem -o StrictHostKeyChecking=no" . "${EC2_USER}@${EC2_HOST}:${EC2_PATH_BACKEND}"
           ssh -o StrictHostKeyChecking=no -i ssh_key.pem "${EC2_USER}@${EC2_HOST}" << EOF
             set -e
