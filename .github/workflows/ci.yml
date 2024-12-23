@@ -157,13 +157,17 @@ jobs:
             fi
 
             # Use rebase to resolve divergent branches automatically
-            git pull --rebase origin main
+            git pull --rebase origin main || {
+              echo "Rebase failed; resolving conflicts by resetting..."
+              git rebase --abort
+              git reset --hard origin/main
+            }
 
-            # Set environment variables and perform setup
-            export DB_HOST=${DB_HOST}
-            export DB_USER=${DB_USER}
-            export DB_PASSWORD=${DB_PASSWORD}
-            export DB_NAME=${DB_NAME}
+            # Set environment variables with defaults
+            export DB_HOST=${DB_HOST:-localhost}
+            export DB_USER=${DB_USER:-my_db_user}
+            export DB_PASSWORD=${DB_PASSWORD:-default_password}
+            export DB_NAME=${DB_NAME:-myapp_production}
 
             # Install dependencies and setup Rails
             bundle config set path 'vendor/bundle'
@@ -178,5 +182,6 @@ jobs:
             sudo systemctl reload nginx
             sudo systemctl restart puma
           EOF
+  
       
   
