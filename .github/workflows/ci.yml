@@ -147,7 +147,7 @@ jobs:
             set -euo pipefail
             cd /var/www/bookClub
 
-            # Ensure the directory is a valid Git repository
+            # Ensure the directory is a valid Git repository.
             if [ ! -d .git ]; then
               echo "Initializing Git repository..."
               git init
